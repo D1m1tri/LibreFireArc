@@ -2,55 +2,19 @@
 <html>
   <head>
     <title>Libre FireArc</title>
+    <link rel="stylesheet" href="sidebar.css">
     <style>
-      #myElement {
-        font: menu;
-        font-size: 1.5em;
-        font-weight: 500;
-        padding: 1em;
-        margin: 1em;
-      }
-      .tab-item {
-        font: menu;
-        font-size: 20px;
-        font-weight: 500;
-        padding: 7px;
-        margin: 1em;
-        color: #fff;
-        list-style-type: none;
-        background-color: #333;
-        border-radius: 5px;
-        height: 40px;
-        max-width: 100%;
-        overflow: hidden;
-        display: flex !important;
-      }
-      .tab-item:hover {
-        background-color: #555;
-      }
-      .tab-item > img {
-        margin: auto 10px auto 3px;
-        height: 25px;
-        width: 25px;
-      }
-      .tab-item > span {
-        margin: auto;
-        height: 25px;
-        width: 100%;
-        overflow: hidden;
-      }
-      .active {
-        background-color: #555;
-        color: #c77;
-      }
     </style>
   </head>
 
   <body>
-    <div id="myElement">
-      Libre FireArc is a free and open-source extension for the libreWolf web browser that adds various features to the browser's sidebar, and a visual overhaul to the browser's interface.
-    </div>
     <div id="tabsList"></div>
+    <div class="actions">
+      <div class="tab-back action">Back</div>
+      <div class="tab-forward action">Next</div>
+      <div class="tab-reload action">Reload</div>
+      <div class="create-tab action">Create Tab</div>
+    </div>
     <script src="sidebar.js"></script>
   </body>
 </html>

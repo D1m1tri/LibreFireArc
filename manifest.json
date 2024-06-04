@@ -20,6 +20,15 @@
     "gecko": {
       "id": "@libre-firearc"
     }
+  },
+
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Command+Shift+S"
+      }
+    }
   }
 }
 

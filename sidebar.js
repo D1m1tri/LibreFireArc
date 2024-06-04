@@ -1,30 +1,20 @@
 /*********************
-*** Main Functions ***
-*********************/
+ *** Main Functions ***
+ *********************/
 
 // Get and apply the current theme
 function setSidebarStyle(theme) {
-  const myElement = document.getElementById("myElement");
+  var root = document.querySelector(':root');
 
-  if (theme.colors && theme.colors.frame) {
-    document.body.style.backgroundColor = theme.colors.frame;
-  }
-  else {
-    document.body.style.backgroundColor = "white";
-  }
+  if (theme.colors) {
+    root.style.setProperty('--bg-color', theme.colors.frame ? theme.colors.frame : "white");
+    root.style.setProperty('--tb-color', theme.colors.toolbar ? theme.colors.toolbar : "e0e0e0");
+    root.style.setProperty('--tb-text-color', theme.colors.toolbar_text ? theme.colors.toolbar_text : "white");
+    root.style.setProperty('--btn-bg-hvr', theme.colors.button_background_hover ? theme.colors.button_background_hover : "555");
 
-  if (theme.colors && theme.colors.toolbar) {
-    myElement.style.backgroundColor = theme.colors.toolbar;
-  }
-  else {
-    myElement.style.backgroundColor = "e0e0e0";
-  }
-
-  if (theme.colors && theme.colors.toolbar_text) {
-    myElement.style.color = theme.colors.toolbar_text;
-  }
-  else {
-    myElement.style.color = "white";
+    // Tab styles
+    root.style.setProperty('--tab-bg-color', theme.colors.tab_selected ? theme.colors.tab_selected : theme.colors.button_background_hover ? theme.colors.button_background_hover : "555");
+    root.style.setProperty('--tab-line', theme.colors.tab_line ? theme.colors.tab_line : theme.colors.toolbar_text ? theme.colors.toolbar_text : "white");
   }
 }
 
@@ -40,15 +30,21 @@ function displayTabs(tabs) {
   // Add tabs
   for (let tab of tabs) {
     const tabItem = document.createElement("li");
+
     const tabFavicon = document.createElement("img");
-    const tabTitle = document.createElement("span");
     tabFavicon.src = tab.favIconUrl;
     tabFavicon.classList.add("tab-favicon");
     tabItem.appendChild(tabFavicon);
+
+    const tabTitle = document.createElement("div");
     tabTitle.textContent = tab.title;
     tabTitle.classList.add("tab-title");
     tabItem.appendChild(tabTitle);
+
     tabItem.classList.add("tab-item");
+    tabItem.addEventListener("dblclick", () => {
+      browser.tabs.remove(tab.id);
+    });
     tabItem.addEventListener("click", () => {
       browser.tabs.update(tab.id, {active: true});
     });
@@ -78,8 +74,8 @@ initSidebar();
 
 
 /**********************
-*** Event Listeners ***
-**********************/
+ *** Event Listeners ***
+ **********************/
 
 // Listen for theme changes
 browser.theme.onUpdated.addListener(async ({theme, windowId}) => {
@@ -90,39 +86,26 @@ browser.theme.onUpdated.addListener(async ({theme, windowId}) => {
 });
 
 // Listen for any changes to the tabs
-browser.tabs.onActivated.addListener(async ({tabId, windowId}) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
+for (let event of ["onActivated", "onAttached", "onCreated", "onDetached", "onHighlighted", "onMoved", "onRemoved", "onReplaced", "onUpdated"]) {
+  browser.tabs[event].addListener(async () => {
+    tabs = await browser.tabs.query({currentWindow: true});
+    displayTabs(tabs);
+  });
+}
+
+// create tab
+document.querySelector(".create-tab").addEventListener("click", () => {
+  browser.tabs.create({});
 });
-browser.tabs.onAttached.addListener(async ({tabId, windowId}) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
+// back
+document.querySelector(".tab-back").addEventListener("click", () => {
+  browser.tabs.goBack();
 });
-browser.tabs.onCreated.addListener(async (tab) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
+// forward
+document.querySelector(".tab-forward").addEventListener("click", () => {
+  browser.tabs.goForward();
 });
-browser.tabs.onDetached.addListener(async ({tabId, windowId}) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
-});
-browser.tabs.onHighlighted.addListener(async ({tabIds, windowId}) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
-});
-browser.tabs.onMoved.addListener(async ({tabId, windowId}) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
-});
-browser.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
-});
-browser.tabs.onReplaced.addListener(async ({addedTabId, removedTabId}) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
-});
-browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  tabs = await browser.tabs.query({currentWindow: true});
-  displayTabs(tabs);
+// reload
+document.querySelector(".tab-reload").addEventListener("click", () => {
+  browser.tabs.reload();
 });

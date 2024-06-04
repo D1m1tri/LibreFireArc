@@ -1,0 +1,80 @@
+:root {
+  --bg-color: "white";
+  --tb-color: "#e0e0e0";
+  --tb-text-color: "white";
+  --btn-bg-hvr: "#555";
+  --tab-bg-color: "white";
+  --tab-line: "white";
+}
+
+body {
+  background-color: var(--bg-color);
+}
+.tab-item {
+  padding: 0;
+  margin: 5px;
+  list-style-type: none;
+  background-color: var(--tb-color);
+  border-radius: 5px;
+  height: 30px;
+  max-width: 100%;
+  display: flex !important;
+}
+.tab-item:hover {
+  background-color: var(--btn-bg-hvr);
+}
+.tab-item img {
+  margin: auto 5px;
+  height: 20px;
+  width: 20px;
+}
+.tab-title {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--tb-text-color);
+  margin: auto;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.active {
+  background-color: var(--tab-bg-color);
+  color: var(--tb-text-color);
+  border: 1px solid var(--tab-line);
+}
+
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 5px;
+  width: calc(100% - 10px);
+}
+.action {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--tb-color);
+  border-radius: 5px;
+  height: 30px;
+}
+.action:hover {
+  background-color: var(--btn-bg-hvr);
+}
+.tab-back {
+  width: calc(40% - 10px);
+}
+.tab-forward {
+  width: calc(40% - 10px);
+}
+.tab-reload {
+  width: calc(20% - 10px);
+}
+.create-tab {
+  width: calc(100% - 10px);
+}
