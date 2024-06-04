@@ -1,0 +1,26 @@
+{
+  "name": "Libre FireArc",
+  "author": "D1m1tri",
+  "description": "An extension that adds various features to Firefox, based on the Arc Browser.",
+  "version": "1.0",
+  "manifest_version": 2,
+
+
+  "permissions": [
+    "tabs",
+    "theme"
+  ],
+
+  "sidebar_action": {
+    "default_title": "Libre FireArc",
+    "default_panel": "sidebar.html"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@libre-firearc"
+    }
+  }
+}
+
+
