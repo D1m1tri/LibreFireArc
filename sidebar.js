@@ -15,6 +15,14 @@ function setSidebarStyle(theme) {
     // Tab styles
     root.style.setProperty('--tab-bg-color', theme.colors.tab_selected ? theme.colors.tab_selected : theme.colors.button_background_hover ? theme.colors.button_background_hover : "555");
     root.style.setProperty('--tab-line', theme.colors.tab_line ? theme.colors.tab_line : theme.colors.toolbar_text ? theme.colors.toolbar_text : "white");
+
+    // Search bar styles
+    root.style.setProperty('--search-bg', theme.colors.toolbar_field ? theme.colors.toolbar_field : "white");
+    root.style.setProperty('--search-text', theme.colors.toolbar_field_text ? theme.colors.toolbar_field_text : "black");
+    root.style.setProperty('--search-line', theme.colors.toolbar_field_border ? theme.colors.toolbar_field_border : theme.colors.toolbar_text ? theme.colors.toolbar_text : "black");
+    root.style.setProperty('--search-bg-focus', theme.colors.toolbar_field_focus ? theme.colors.toolbar_field_focus : theme.colors.toolbar_field ? theme.colors.toolbar_field : "white");
+    root.style.setProperty('--search-text-focus', theme.colors.toolbar_field_text_focus ? theme.colors.toolbar_field_text_focus : theme.colors.toolbar_field_text ? theme.colors.toolbar_field_text : "black");
+    root.style.setProperty('--search-line-focus', theme.colors.toolbar_field_border_focus ? theme.colors.toolbar_field_border_focus : theme.colors.toolbar_field_border ? theme.colors.toolbar_field_border : "black");
   }
 }
 
@@ -90,6 +98,9 @@ for (let event of ["onActivated", "onAttached", "onCreated", "onDetached", "onHi
   browser.tabs[event].addListener(async () => {
     tabs = await browser.tabs.query({currentWindow: true});
     displayTabs(tabs);
+    // display current tab url on input
+    const currentTab = await browser.tabs.query({active: true, currentWindow: true});
+    document.querySelector(".search-query").value = currentTab[0].url;
   });
 }
 
@@ -108,4 +119,13 @@ document.querySelector(".tab-forward").addEventListener("click", () => {
 // reload
 document.querySelector(".tab-reload").addEventListener("click", () => {
   browser.tabs.reload();
+});
+
+// Search engine on button click
+document.querySelector(".search-btn").addEventListener("click", () => {
+  const searchQuery = document.querySelector(".search-query").value;
+  browser.search.query({
+    disposition: "CURRENT_TAB",
+    text: searchQuery
+  });
 });

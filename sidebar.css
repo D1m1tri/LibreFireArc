@@ -1,22 +1,69 @@
 :root {
+  /* General */
+  --border-radius: 5px;
+  --margin: 5px;
+  --padding: 5px;
+  --height: 30px;
+  --text-size: 15px;
+  --text-weight: 500;
+  --icon-size: 20px;
+
+  /* Colors */
   --bg-color: "white";
   --tb-color: "#e0e0e0";
   --tb-text-color: "white";
   --btn-bg-hvr: "#555";
   --tab-bg-color: "white";
   --tab-line: "white";
+
+  /* Search */
+  --search-bg: "white";
+  --search-text: "black";
+  --search-line: "black";
+  --search-bg-focus: "white";
+  --search-text-focus: "black";
+  --search-line-focus: "black";
 }
 
 body {
   background-color: var(--bg-color);
 }
+
+/* Search */
+.search {
+  display: flex;
+  justify-content: center;
+  margin: var(--margin);
+}
+.search-query {
+  width: 80%;
+  height: var(--height);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--search-line);
+  background-color: var(--search-bg);
+  color: var(--search-text);
+  padding: 0 var(--padding);
+}
+.search-query:focus {
+  border: 1px solid var(--search-line-focus);
+  background-color: var(--search-bg-focus);
+  color: var(--search-text-focus);
+}
+.search-button {
+  width: 20%;
+  height: var(--height);
+  border-radius: var(--border-radius);
+  background-color: var(--tb-color);
+}
+
+/* Tabs */
 .tab-item {
   padding: 0;
-  margin: 5px;
+  margin: var(--margin);
   list-style-type: none;
   background-color: var(--tb-color);
-  border-radius: 5px;
-  height: 30px;
+  border-radius: var(--border-radius);
+  height: var(--height);
   max-width: 100%;
   display: flex !important;
 }
@@ -24,13 +71,13 @@ body {
   background-color: var(--btn-bg-hvr);
 }
 .tab-item img {
-  margin: auto 5px;
-  height: 20px;
-  width: 20px;
+  margin: auto var(--margin);
+  height: var(--icon-size);
+  width: var(--icon-size);
 }
 .tab-title {
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: var(--text-weight);
+  font-size: var(--text-size);
   color: var(--tb-text-color);
   margin: auto;
   max-width: 100%;
@@ -44,7 +91,7 @@ body {
   border: 1px solid var(--tab-line);
 }
 
-
+/* Actions */
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -52,29 +99,29 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  margin: 5px;
-  width: calc(100% - 10px);
+  margin: var(--margin);
+  width: calc(100% - var(--margin) * 2);
 }
 .action {
-  margin: 5px;
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: var(--tb-color);
-  border-radius: 5px;
-  height: 30px;
+  border-radius: var(--border-radius);
+  height: var(--height);
+  color: var(--tb-text-color);
 }
 .action:hover {
   background-color: var(--btn-bg-hvr);
 }
-.tab-back {
-  width: calc(40% - 10px);
-}
-.tab-forward {
-  width: calc(40% - 10px);
+.tab-back, .tab-forward {
+  width: calc(40% - var(--margin) * 2);
 }
 .tab-reload {
-  width: calc(20% - 10px);
+  width: calc(20% - var(--margin) * 2);
+  margin: var(--margin);
 }
 .create-tab {
-  width: calc(100% - 10px);
+  width: calc(100% - var(--margin) * 2);
+  margin: var(--margin);
 }
