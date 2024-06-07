@@ -32,11 +32,12 @@ body {
 /* Search */
 .search {
   display: flex;
-  justify-content: center;
   margin: var(--margin);
+  border-bottom: 1px solid var(--tb-text-color);
 }
 .search-query {
-  width: 80%;
+  width: calc(80% - var(--margin) * 2);
+  margin: var(--margin);
   height: var(--height);
   border-radius: var(--border-radius);
   border: 1px solid var(--search-line);
@@ -45,18 +46,20 @@ body {
   padding: 0 var(--padding);
 }
 .search-query:focus {
+  outline: none;
   border: 1px solid var(--search-line-focus);
   background-color: var(--search-bg-focus);
   color: var(--search-text-focus);
 }
-.search-button {
-  width: 20%;
-  height: var(--height);
-  border-radius: var(--border-radius);
-  background-color: var(--tb-color);
+.search-btn {
+  width: calc(20% - var(--margin) * 2);
 }
 
 /* Tabs */
+#tabsList {
+  margin: 0 var(--margin);
+  padding: 0;
+}
 .tab-item {
   padding: 0;
   margin: var(--margin);
@@ -110,16 +113,23 @@ body {
   border-radius: var(--border-radius);
   height: var(--height);
   color: var(--tb-text-color);
+  margin: var(--margin);
 }
 .action:hover {
   background-color: var(--btn-bg-hvr);
+}
+.action span {
+  margin: auto;
+  font-size: var(--icon-size);
+}
+.action.search-btn span {
+  font-size: var(--text-size);
 }
 .tab-back, .tab-forward {
   width: calc(40% - var(--margin) * 2);
 }
 .tab-reload {
   width: calc(20% - var(--margin) * 2);
-  margin: var(--margin);
 }
 .create-tab {
   width: calc(100% - var(--margin) * 2);

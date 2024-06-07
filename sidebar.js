@@ -59,9 +59,27 @@ function displayTabs(tabs) {
     if (tab.active) {
       tabItem.classList.add("active");
     }
+    // drag and drop to change tab order
+    tabItem.draggable = true;
+    tabItem.addEventListener("dragstart", (event) => {
+      event.dataTransfer.setData("text/plain", tab.id);
+    });
+    tabItem.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+    tabItem.addEventListener("drop", async (event) => {
+      event.preventDefault();
+      const draggedTabId = event.dataTransfer.getData("text/plain");
+      const draggedTab = tabs.find(tab => tab.id == draggedTabId);
+      const dropIndex = tabs.indexOf(tab);
+      const draggedTabIndex = tabs.indexOf(draggedTab);
+      browser.tabs.move(draggedTab.id, {index: dropIndex});
+    });
+
     tabsList.appendChild(tabItem);
   }
 }
+
 
 
 
@@ -76,6 +94,7 @@ async function initSidebar() {
   tabs = await browser.tabs.query({currentWindow: true});
   setSidebarStyle(theme);
   displayTabs(tabs);
+  enableDragAndDrop();
 }
 initSidebar();
 
